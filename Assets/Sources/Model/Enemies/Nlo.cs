@@ -7,12 +7,15 @@ namespace Asteroids.Model
     {
         private readonly float _speed;
         private readonly Transformable _target;
+        
 
         public Nlo(Transformable target, Vector2 position, float speed) : base(position, 0)
         {
             _target = target;
             _speed = speed;
         }
+
+        
 
         public override void Update(float deltaTime)
         {

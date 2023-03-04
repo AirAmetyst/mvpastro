@@ -6,12 +6,13 @@ namespace Asteroids.Model
 {
     public class SecondEnemy : Enemy
     {
-        private readonly Vector2 _direction;
         private readonly float _speed;
+        private readonly Transformable _target;
 
-        public SecondEnemy(Vector2 position, Vector2 direction, float speed) : base(position, 0)
+
+        public SecondEnemy(Transformable target, Vector2 position, float speed) : base(position, 0)
         {
-            _direction = direction;
+            _target = target;
             _speed = speed;
         }
 
@@ -19,10 +20,17 @@ namespace Asteroids.Model
 
         public override void Update(float deltaTime)
         {
-            MoveTo(Position + _direction * _speed * deltaTime);
+            Vector2 nextPosition = Vector2.MoveTowards(Position, _target.Position, _speed * deltaTime);
+            MoveTo(nextPosition);
+            LookAt(_target.Position);
         }
 
-        
+        private void LookAt(Vector2 point)
+        {
+            Rotate(Vector2.SignedAngle(Quaternion.Euler(0, 0, Rotation) * Vector3.up, (Position - point)));
+        }
+
+
     }
 
     

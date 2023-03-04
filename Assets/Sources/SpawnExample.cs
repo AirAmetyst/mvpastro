@@ -5,6 +5,8 @@ public class SpawnExample : MonoBehaviour
 {
     [SerializeField] private PresentersFactory _factory;
     [SerializeField] private Root _init;
+    [SerializeField] private Transformable _nloTarget;
+    [SerializeField] private Transformable _secondTarget;
 
     private int _index;
     private float _secondsPerIndex = 1f;
@@ -19,17 +21,19 @@ public class SpawnExample : MonoBehaviour
             OnTick();
         }
     }
-
+    
     private void OnTick()
     {
         float chance = Random.Range(0, 100);
 
         if (chance < 50)
         {
-            //_factory.CreateNlo(, GetRandomPositionOutsideScreen(), Config.NloSpeed));
+            _factory.CreateNlo(new Nlo(_nloTarget, GetRandomPositionOutsideScreen(), Config.NloSpeed));
             Vector2 position = GetRandomPositionOutsideScreen();
             Vector2 direction = GetDirectionThroughtScreen(position);
-            _factory.CreateSecondEnemy(new SecondEnemy(position, direction, Config.AsteroidSpeed));
+            
+            
+
         }
         else
         {
@@ -37,6 +41,7 @@ public class SpawnExample : MonoBehaviour
             Vector2 direction = GetDirectionThroughtScreen(position);
 
             _factory.CreateAsteroid(new Asteroid(position, direction, Config.AsteroidSpeed));
+            
         }
     }
 
